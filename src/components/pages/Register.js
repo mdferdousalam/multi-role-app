@@ -56,7 +56,6 @@ const Register = () => {
 
 
 
-
     return (
         <div>
             <h2 className='text-center text-xl font-bold my-4'>Register Here</h2>
@@ -65,8 +64,12 @@ const Register = () => {
                     <input className='border-2 rounded p-2 border-indigo-900' name='name' type="text" placeholder='Enter Your Full Name' required />
                     <input className='my-4 border-2 rounded p-2 border-indigo-900' name='email' type="email" placeholder='Email' required />
                     <input className='border-2 mb-4 rounded p-2 border-indigo-900' name='password' type="password" placeholder='Password' required />
-                    <input className='border-2 rounded p-2 border-indigo-900' name='imageURL' type="text" placeholder='Image Url' required />
-                    <input className='my-4 border-2 rounded p-2 border-indigo-900' name='file' type="file" placeholder='Upload Your image' />
+                    <select className='border-2 mb-4 rounded p-2 border-indigo-900' required >
+                        <option selected value="volvo">Please Choose your role</option>
+                        <option value="volvo">Student</option>
+                        <option value="saab">Consultant</option>
+                        <option value="mercedes">Admin</option>
+                    </select>
                     <input className='border-2 rounded border-indigo-900  hover:bg-indigo-600 hover:text-white text-center mx-auto my-7 w-2/12' type="submit" value="Submit" />
                 </div>
                 <p className='text-center'><small>Already have an account?<Link className='text-indigo-700 hover:bg-indigo-600 hover:text-white font-bold' to='/login'>Login</Link></small></p>
