@@ -1,26 +1,58 @@
 import React from 'react';
 import UseTitle from '../hooks/UseTitle';
-
-import { Link } from 'react-router-dom';
-
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 
 
 const Login = () => {
     UseTitle('Login')
 
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.form?.pathname || "/"
+
+    // const [user, setUser] = useState({
+    //     email: "",
+    //     password: ""
+    // })
+
+    // const handleChange = e => {
+    //     setUser({ ...user, [e.target.name]: e.target.value });
+    // };
 
     const handleLogin = (event) => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value
-    }
+
+        const userInfo = {
+
+            email: email,
+            password: password,
+
+        }
+
+        fetch('https://multi-role-server.vercel.app/login', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(userInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data.token)
+                localStorage.setItem("token", data.token);
+                navigate(from, { replace: true })
+            })
+
+    };
+
 
     return (
         <div>
             <h2 className='text-center text-xl font-bold my-4'>Login</h2>
-
 
 
             <form onSubmit={handleLogin}>
@@ -28,11 +60,8 @@ const Login = () => {
 
                     <input className='my-4 border-2 rounded p-2 border-indigo-900' name='email' type="email" placeholder='Email' required />
                     <input className='border-2 mb-4 rounded p-2 border-indigo-900' name='password' type="password" placeholder='Password' required />
-
-
                     <input className='border-2 rounded border-indigo-900  hover:bg-indigo-600 hover:text-white text-center mx-auto my-7 w-2/12' type="submit" value="Login" />
 
-                    {/* <Link  ><p className='text-center '><small className='text-indigo-700 font-bold  hover:bg-indigo-600 hover:text-white'>Forgot your password?</small></p></Link> */}
                     <p className='text-center'><small>Not registered yet?<Link className='text-indigo-700  hover:bg-indigo-600 hover:text-white font-bold' to='/register'>Create an account</Link></small></p>
                 </div>
             </form>
