@@ -1,16 +1,18 @@
+import { AuthContext } from '../../context/Authprovider/AuthContext'
 import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/Authprovider/AuthContext'
 import UseTitle from '../hooks/UseTitle';
+
 
 const Register = () => {
     UseTitle('Register')
-
-    const { createUser, setUser, updateUserProfile } = useContext(AuthContext)
-
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.form?.pathname || "/"
+
+    const { userCreate, setUser, updateUserProfile } = useContext(AuthContext)
+
+
 
     const handleRegister = event => {
         event.preventDefault();
@@ -29,28 +31,6 @@ const Register = () => {
         }
 
 
-        // User creation 
-
-        createUser(email, password)
-            .then(result => {
-                const user = result.user;
-                const newUser = { ...userInfo }
-                setUser(newUser, user)
-                handleUpdateUserProfile(name)
-                navigate(from, { replace: true })
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-        const handleUpdateUserProfile = (name) => {
-            const profileInformation = {
-                displayName: name,
-            }
-            updateUserProfile(profileInformation)
-                .then(() => { })
-                .catch((err) => { })
-        }
 
         // user info send to database via server
 
@@ -64,15 +44,40 @@ const Register = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data.token)
+
+
+                // User creation 
+
+                userCreate(email, password)
+                    .then(result => {
+                        const user = result.user;
+                        const newUser = { ...userInfo }
+                        setUser(newUser, user)
+                        handleUpdateUserProfile(name)
+                        console.log(result)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+
+                const handleUpdateUserProfile = (name) => {
+                    const profileInformation = {
+                        displayName: name,
+                    }
+                    updateUserProfile(profileInformation)
+                        .then(() => { })
+                        .catch((err) => { })
+                }
+
+
                 localStorage.setItem("token", data.token);
-                navigate(from, { replace: true })
+                // navigate(from, { replace: true })
                 if (data.acknowledged) {
                     alert("User registration success")
                     event.target.reset()
-
+                    navigate(from, { replace: true })
                 }
             })
-
 
 
     }

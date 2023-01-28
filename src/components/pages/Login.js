@@ -27,7 +27,6 @@ const Login = () => {
         const password = form.password.value
 
         const userInfo = {
-
             email: email,
             password: password,
 
