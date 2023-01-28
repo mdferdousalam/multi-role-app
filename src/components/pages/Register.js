@@ -30,8 +30,6 @@ const Register = () => {
             role: role
         }
 
-
-
         // user info send to database via server
 
         fetch('https://multi-role-server.vercel.app/signup', {
@@ -44,41 +42,43 @@ const Register = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data.token)
-
-
-                // User creation 
-
-                userCreate(email, password)
-                    .then(result => {
-                        const user = result.user;
-                        const newUser = { ...userInfo }
-                        setUser(newUser, user)
-                        handleUpdateUserProfile(name)
-                        console.log(result)
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-
-                const handleUpdateUserProfile = (name) => {
-                    const profileInformation = {
-                        displayName: name,
-                    }
-                    updateUserProfile(profileInformation)
-                        .then(() => { })
-                        .catch((err) => { })
-                }
-
-
                 localStorage.setItem("token", data.token);
+
                 // navigate(from, { replace: true })
+
+
                 if (data.acknowledged) {
                     alert("User registration success")
                     event.target.reset()
-                    navigate(from, { replace: true })
+                    // navigate(from, { replace: true })
                 }
             })
 
+
+        // User creation 
+
+        userCreate(email, password)
+            .then(result => {
+                const user = result.user;
+                const newUser = { ...userInfo }
+                setUser(newUser, user)
+                handleUpdateUserProfile(name)
+                console.log(result)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+        const handleUpdateUserProfile = (name) => {
+            const profileInformation = {
+                displayName: name,
+            }
+            updateUserProfile(profileInformation)
+                .then(() => {
+                    navigate(from, { replace: true })
+                })
+                .catch((err) => { })
+        }
 
     }
 
@@ -93,7 +93,7 @@ const Register = () => {
                     <input className='my-4 border-2 rounded p-2 border-indigo-900' name='email' type="email" placeholder='Email' required />
                     <input className='border-2 mb-4 rounded p-2 border-indigo-900' name='password' type="password" placeholder='Password' required />
                     <select className='border-2 mb-4 rounded p-2 border-indigo-900' name='role' required >
-                        <option defaultValue value="volvo">Please Choose your role</option>
+                        <option defaultValue value="student">Please Choose your role</option>
                         <option value="student">Student</option>
                         <option value="consultant">Consultant</option>
                         <option value="admin">Admin</option>

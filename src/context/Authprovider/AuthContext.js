@@ -9,16 +9,13 @@ const auth = getAuth(app)
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
-
     const [userEmail, setuserEmail] = useState('')
 
     const providerLogin = (provider) => {
-
         return signInWithPopup(auth, provider)
     }
 
     const logOut = () => {
-
         return signOut(auth);
     }
 
@@ -27,7 +24,6 @@ const AuthProvider = ({ children }) => {
     }
 
     const signIn = (email, password) => {
-
         return signInWithEmailAndPassword(auth, email, password)
     }
 
@@ -37,7 +33,6 @@ const AuthProvider = ({ children }) => {
             setUser(currentUser)
 
         })
-
         return () => {
             unsubscribe()
         }

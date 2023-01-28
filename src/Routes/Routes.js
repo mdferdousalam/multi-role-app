@@ -21,6 +21,7 @@ const router = createBrowserRouter([
             {
                 path: '/home',
                 element: <Home></Home>,
+                loader: () => fetch('https://multi-role-server.vercel.app/users')
 
             },
             {

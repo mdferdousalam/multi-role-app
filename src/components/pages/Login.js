@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import UseTitle from '../hooks/UseTitle';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/Authprovider/AuthContext';
 
 
 
@@ -11,14 +12,7 @@ const Login = () => {
     const location = useLocation()
     const from = location.state?.form?.pathname || "/"
 
-    // const [user, setUser] = useState({
-    //     email: "",
-    //     password: ""
-    // })
-
-    // const handleChange = e => {
-    //     setUser({ ...user, [e.target.name]: e.target.value });
-    // };
+    const { userEmail, setuserEmail, setUser, signIn, auth } = useContext(AuthContext)
 
     const handleLogin = (event) => {
         event.preventDefault();
@@ -31,6 +25,15 @@ const Login = () => {
             password: password,
 
         }
+        signIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                setUser(user)
+                // navigate(from, { replace: true })
+
+            })
+            .catch(error => console.log(error))
 
         fetch('https://multi-role-server.vercel.app/login', {
             method: "POST",
