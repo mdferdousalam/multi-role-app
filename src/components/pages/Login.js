@@ -12,7 +12,7 @@ const Login = () => {
     const location = useLocation()
     const from = location.state?.form?.pathname || "/"
 
-    const { userEmail, setuserEmail, setUser, signIn, auth } = useContext(AuthContext)
+    const { setUser, signIn } = useContext(AuthContext)
 
     const handleLogin = (event) => {
         event.preventDefault();

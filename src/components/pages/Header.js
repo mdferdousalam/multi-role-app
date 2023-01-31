@@ -5,8 +5,6 @@ import { AuthContext } from '../../context/Authprovider/AuthContext';
 
 const Header = () => {
 
-
-
     const { logOut, user } = useContext(AuthContext)
     const navigate = useNavigate();
     const handleLogOut = () => {
@@ -18,7 +16,6 @@ const Header = () => {
             .catch((error) => console.error(error))
     }
 
-
     return (
         <div>
             <div className="navbar bg-base-100">
@@ -26,15 +23,15 @@ const Header = () => {
                     <Link to='/home' className="btn btn-ghost normal-case text-xl font-bold text-indigo-900 hover:bg-indigo-600 hover:text-white">Multi Role App</Link>
                 </div>
                 <div className="flex-none">
-
-
                     {
                         user?.uid ?
                             <>
                                 <div className='flex justify-evenly  '>
                                     <button className="btn btn-ghost hover:bg-indigo-600 text-xl hover:text-white">
-
-                                        <Link className='text-indigo-900 text-xl font-bold'>  <button onClick={handleLogOut}>Logout</button></Link>
+                                        <Link to='/dashboard' className='text-indigo-900 text-xl font-bold hover:text-white'>  <button >Dashboard</button></Link>
+                                    </button>
+                                    <button className="btn btn-ghost hover:bg-indigo-600 text-xl ">
+                                        <Link className='text-indigo-900 text-xl font-bold hover:text-white'>  <button onClick={handleLogOut}>Logout</button></Link>
                                     </button>
                                     <button className="btn btn-ghost content-center btn-circle">
                                         <div className="avatar online">
@@ -60,8 +57,6 @@ const Header = () => {
                                 </button> */}
                             </>
                     }
-
-
                 </div>
             </div>
         </div>
